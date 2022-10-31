@@ -6,6 +6,7 @@ function countEntrants(entrants) {
 
 function calculateEntry(entrants) {
   // seu código aqui
+  //Inicio
 }
 
 module.exports = { calculateEntry, countEntrants };
