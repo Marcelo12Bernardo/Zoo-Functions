@@ -327,9 +327,7 @@ module.exports = {
     },
   ],
   hours: {
-    Tuesday: {
-      open: 8, close: 6
-    },
+    Tuesday: { open: 8, close: 6 },
     Wednesday: { open: 8, close: 6 },
     Thursday: { open: 10, close: 8 },
     Friday: { open: 10, close: 8 },

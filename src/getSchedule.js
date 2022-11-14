@@ -1,30 +1,39 @@
 const data = require('../data/zoo_data');
 
-function completWeek() {
-  const week = {
-    // Tuesday: {
-    //   officeHour: 'Open 8am until 6pm', exhibition: ['lions', 'tigers', 'bears', 'penguins'],
-    // }, Wednesday: {
-    //   officeHour: 'Open 6am until 6pm', exhibition: ['penguins', 'elephants', 'giraffes'],
-    // }, Thursday: {
-    //   officeHour: 'Open 84am until 6pm', exhibition: ['lions', 'tigers', 'giraffes'],
-    // }, Friday: {
-    //   officeHour: 'Open 3am until 6pm', exhibition: ['bears', 'penguins', 'elephants'],
-    // }, Saturday: {
-    //   officeHour: 'Open 9am until 6pm', exhibition: ['bears', 'penguins'],
-    // }, Sunday: {
-    //   officeHour: 'Open 0am until 6pm', exhibition: ['lions', 'bears', 'penguins', 'elephants'],
-    // }, Monday: {
-    //   officeHour: 'Open 12am until 6pm', exhibition: ['tigers', 'bears', 'elephants', 'giraffes'],
-    // },
+const { species } = data;
+const { hours } = data;
+const daysWeek = Object.keys(hours);
+
+const completeWeek = () => {
+  const semanaCompleta = daysWeek.reduce((acc, day) => {
+    const funcionamento = `Open from ${hours[day].open}am until ${hours[day].close}pm`;
+    const animaisDisponiveis = species.filter((animal) => animal.availability
+      .includes(day)).map((nameAnimal) => nameAnimal.name);
+    acc[day] = {
+      officeHour: funcionamento,
+      exhibition: animaisDisponiveis,
+    };
+    return acc;
+  }, {});
+  // Não abre
+  semanaCompleta.Monday = {
+    officeHour: 'CLOSED',
+    exhibition: 'The zoo will be closed!',
   };
-  return week;
-}
+  return semanaCompleta;
+};
+
 function getSchedule(scheduleTarget) {
-  if (data.species.includes(scheduleTarget) === false || scheduleTarget === undefined
-  || data.hours.includes(scheduleTarget) === false) {
-    completWeek();
+  const animalProcurado = species.find((animal) => animal.name === scheduleTarget);
+  if (animalProcurado !== undefined) {
+    return animalProcurado.availability;
   }
+  if (daysWeek.includes(scheduleTarget)) {
+    const agenda = completeWeek();
+    return { [scheduleTarget]: agenda[scheduleTarget] };
+  }
+  // Caso não receba parametro ou o parametro não seja valido
+  return completeWeek();
 }
 
 module.exports = getSchedule;
