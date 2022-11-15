@@ -14,6 +14,7 @@ describe('Testes da função getOpeningHours', () => {
   it('Verifica se o zoo esta fechado', () => expect(getOpeningHours('Monday', '09:00-AM')).toEqual('The zoo is closed'));
   it('Verifica se o zoo esta fechado', () => expect(getOpeningHours('Wednesday', '09:00-PM')).toEqual('The zoo is closed'));
   it('Verifica se o zoo esta abberto', () => expect(getOpeningHours('Tuesday', '09:00-AM')).toEqual('The zoo is open'));
+  it('Verifica se o zoo esta abberto', () => expect(getOpeningHours('Friday', '11:00-AM')).toEqual('The zoo is open'));
   // erros esperados
   const hourError = 'The hour should represent a number';
   const hourError2 = 'The hour must be between 0 and 12';
@@ -29,4 +30,5 @@ describe('Testes da função getOpeningHours', () => {
   it('Para os argumentos Monday e 13:00-AM deve lançar uma exceção', () => expect(() => getOpeningHours('Saturday', '13:00-AM')).toThrow(hourError2));
   it('Para os argumentos Tuesdaay e 09:60-AM deve lançar uma exceção', () => expect(() => getOpeningHours('Saturday', '09:60-AM')).toThrow(minuteError));
   it('Verifica se ao passar \'qualquer coisa\' retorna um erro', () => expect(() => getOpeningHours('Ramdom')).toThrow(dayError));
+  it('Verifica se ao passar \'qualquer coisa\' no horario retorna um erro', () => expect(() => getOpeningHours('Saturday', 'Ramdom')).toThrow(hourError));
 });
