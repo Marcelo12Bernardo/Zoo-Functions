@@ -18,11 +18,15 @@ describe('Testes da função getOpeningHours', () => {
   const hourError = 'The hour should represent a number';
   const hourError2 = 'The hour must be between 0 and 12';
   const minuteError = 'The minutes must be between 0 and 59';
+  const minuteError2 = 'The minutes should represent a number';
   const dayError = 'The day must be valid. Example: Monday';
+  const xxError = 'The abbreviation must be \'AM\' or \'PM\'';
   // testa se retorna os  erros corretos
+  it('Para os argumentos Thu e 09:00-AM deve lançar uma exceção', () => expect(() => getOpeningHours('Thu', '09:00-AM')).toThrow(dayError));
+  it('Para os argumentos Friday e 09:00-ZM deve lançar uma exceção', () => expect(() => getOpeningHours('Friday', '09:00-ZM')).toThrow(xxError));
+  it('Para os argumentos Saturday e C9:00-AM deve lançar uma exceção', () => expect(() => getOpeningHours('Saturday', 'C9:00-AM')).toThrow(hourError));
+  it('Para os argumentos Sunday e 09:c0-AM deve lançar uma exceção', () => expect(() => getOpeningHours('Saturday', '09:c0-AM')).toThrow(minuteError2));
+  it('Para os argumentos Monday e 13:00-AM deve lançar uma exceção', () => expect(() => getOpeningHours('Saturday', '13:00-AM')).toThrow(hourError2));
+  it('Para os argumentos Tuesdaay e 09:60-AM deve lançar uma exceção', () => expect(() => getOpeningHours('Saturday', '09:60-AM')).toThrow(minuteError));
   it('Verifica se ao passar \'qualquer coisa\' retorna um erro', () => expect(() => getOpeningHours('Ramdom')).toThrow(dayError));
-  it('Verifica se ao passar a \'hora errada\' retorna um erro', () => expect(() => getOpeningHours('Monday', 'Ramdom')).toThrow(hourError));
-  it('Verifica se ao passar o dia errado retorna um erro', () => expect(() => getOpeningHours('Ramdom', '08:00-AM')).toThrow(dayError));
-  it('Verifica se ao passar uma \'hora maior que 12\' retorna um erro', () => expect(() => getOpeningHours('Monday', '17:00-AM')).toThrow(hourError2));
-  it('Verifica se ao passar um \'minuto maior que 59\' retorna um erro', () => expect(() => getOpeningHours('Monday', '10:95-AM')).toThrow(minuteError));
 });
